@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 var options = new ReportOptions
 {
-    HeaderTitle = "Dynamic Report Title",
     Orientation = "Portrait", // or "Landscape"
-    Language = "EN", // or "AR"
+    Language = "EN", // or "AR" 
+    PageHeader = {ministryName ="Al Rayan Ministry",ReportTitle = "Dynamic Report Title" 
+                    ,ReportSubTitle="bla bla bla ", ministryImg ="favicon.ico",EmployeeName="Ahmed Saad Helmy"} ,
     TableHeaders = headers(),
     TableData = Data()
 };

@@ -8,9 +8,9 @@ namespace QuestPdfDemo.models
 {
     public class ReportOptions
     {
-        public string HeaderTitle { get; set; }
         public string Orientation { get; set; } // "Portrait" or "Landscape"
         public string Language { get; set; } // "AR" or "EN"
+        public PageHeaderViewModel PageHeader { get; set; } = new PageHeaderViewModel();
         public List<header> TableHeaders { get; set; }
         public List<List<DataViewModel>> TableData { get; set; } // Rows of data
     }
@@ -26,8 +26,11 @@ namespace QuestPdfDemo.models
     }
      public class PageHeaderViewModel()
     {
-        public string name { get; set; }
-        public string value { get; set; }
+        public string ministryName { get; set; }
+        public string? ministryImg { get; set; }
+        public string ReportTitle { get; set; }
+        public string ReportSubTitle { get; set; }
+        public string EmployeeName { get; set; }
     }
 
 }

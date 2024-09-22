@@ -34,7 +34,7 @@ namespace QuestPdfDemo.Report
                         page.Margin(50);
 
                         page.Header()
-                            .Element(c => ComposeHeader(c, _options.HeaderTitle));
+                            .Element(c => ComposeHeader(c, _options.PageHeader));
 
                         page.Content()
                             .Element(c => ComposeBody(c, _options.TableHeaders, _options.TableData));
@@ -46,7 +46,7 @@ namespace QuestPdfDemo.Report
             
         }
 
-        private void ComposeHeader(IContainer container, string title)
+        private void ComposeHeader(IContainer container, PageHeaderViewModel header)
         {
             container.Row(row =>
             {
@@ -54,21 +54,21 @@ namespace QuestPdfDemo.Report
                 row.ConstantItem(150)
                 .PaddingTop(20)
                 .Height(90)
-               .Text(title)
+               .Text(header.ReportTitle)
                .FontSize(26).FontColor(Colors.Orange.Accent4).SemiBold();
 
                 row.RelativeItem().PaddingTop(20).Height(90).Column(column =>
 
                 {
-                    column.Item().Text("bla bla bla blasss").Style(Typography.Title).AlignCenter();
-                    column.Item().Text("ghhshshshd ssdsd").AlignCenter();
-                    column.Item().Text("احمد سعد  ").AlignCenter();
+                    column.Item().Text(header.ReportSubTitle).Style(Typography.Title).AlignCenter();
+                    
+                    column.Item().Text(header.EmployeeName).AlignCenter();
                 });
                 row.RelativeItem().Height(80).Column(column =>
                 {
 
-                    column.Item().AlignCenter().Height(40).Width(40).Image("favicon.ico");
-                    column.Item().AlignCenter().Text("hello hi hi ")
+                    column.Item().AlignCenter().Height(40).Width(40).Image(header.ministryImg?? "favicon.ico");
+                    column.Item().AlignCenter().Text(header.ministryName)
                      .FontColor(Colors.Orange.Accent4).SemiBold();
                     column.Item().AlignCenter().Text(Placeholders.Label());
                 });
@@ -84,18 +84,12 @@ namespace QuestPdfDemo.Report
                 // Define columns based on headers
                 table.ColumnsDefinition(columns =>
                         {
-                            foreach (var header in headers)
-                            {
-                                if (header.width != null)
+                            
+                                foreach (var header in headers)
                                 {
-                                    columns.RelativeColumn((float)header.width);
+                                    columns.RelativeColumn(header.width ?? 2); // If width is null, use 2 as default
                                 }
-                                else
-                                {
-                                    columns.RelativeColumn(2);
-                                }
-                                
-                            }
+                            
                         });
 
                         // Header row
