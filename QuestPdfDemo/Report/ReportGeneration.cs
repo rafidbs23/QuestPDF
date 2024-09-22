@@ -9,6 +9,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
 using System.Linq.Expressions;
+using QuestPdfDemo.Styles;
 namespace QuestPdfDemo.Report
 {
     public class ReportGeneration
@@ -29,7 +30,7 @@ namespace QuestPdfDemo.Report
                     {
                         // Set orientation
                         page.Size(_options.Orientation == "Landscape" ? PageSizes.A4.Landscape() : PageSizes.A4.Portrait());
-                        if (_options.Language == "AR") page.ContentFromRightToLeft();
+                        if(_options.Language =="AR") page.ContentFromRightToLeft();
                         page.Margin(50);
 
                         page.Header()
@@ -59,7 +60,7 @@ namespace QuestPdfDemo.Report
                 row.RelativeItem().PaddingTop(20).Height(90).Column(column =>
 
                 {
-                    column.Item().Text("bla bla bla blasss").AlignCenter();
+                    column.Item().Text("bla bla bla blasss").Style(Typography.Title).AlignCenter();
                     column.Item().Text("ghhshshshd ssdsd").AlignCenter();
                     column.Item().Text("احمد سعد  ").AlignCenter();
                 });
@@ -76,7 +77,7 @@ namespace QuestPdfDemo.Report
             });
         }
 
-        private void ComposeBody(IContainer container, List<string> headers, List<List<string>> data)
+        private void ComposeBody(IContainer container, List<header> headers, List<List<DataViewModel>> data)
         {
             container.PaddingBottom(1).Extend().Table(table =>
             {
@@ -85,7 +86,15 @@ namespace QuestPdfDemo.Report
                         {
                             foreach (var header in headers)
                             {
-                                columns.RelativeColumn(); // Adjust width as necessary
+                                if (header.width != null)
+                                {
+                                    columns.RelativeColumn((float)header.width);
+                                }
+                                else
+                                {
+                                    columns.RelativeColumn(2);
+                                }
+                                
                             }
                         });
 
@@ -94,7 +103,7 @@ namespace QuestPdfDemo.Report
                         {
                             foreach (var header in headers)
                             {
-                                headerRow.Cell().Element(headerBlock).Text(header);
+                                headerRow.Cell().Element(headerBlock).Text(header.name);
                             }
                         });
 
@@ -103,7 +112,7 @@ namespace QuestPdfDemo.Report
                         {
                             foreach (var cell in row)
                             {
-                                table.Cell().Element(Block).Text(cell);
+                                table.Cell().Element(Block).Text(cell.value);
                             }
                         }
                     });

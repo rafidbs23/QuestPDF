@@ -11,7 +11,23 @@ namespace QuestPdfDemo.models
         public string HeaderTitle { get; set; }
         public string Orientation { get; set; } // "Portrait" or "Landscape"
         public string Language { get; set; } // "AR" or "EN"
-        public List<string> TableHeaders { get; set; }
-        public List<List<string>> TableData { get; set; } // Rows of data
+        public List<header> TableHeaders { get; set; }
+        public List<List<DataViewModel>> TableData { get; set; } // Rows of data
     }
+    public class header()
+    {
+        public string name { get; set; }
+        public float? width { get; set; }
+    } 
+    public class DataViewModel()
+    {
+        public string name { get; set; }
+        public string value { get; set; }
+    }
+     public class PageHeaderViewModel()
+    {
+        public string name { get; set; }
+        public string value { get; set; }
+    }
+
 }
