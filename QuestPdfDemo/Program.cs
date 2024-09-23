@@ -15,6 +15,8 @@ var headers = new List<Header>
     };
 var products = new List<Product>
     {
+    //add order to headers => 
+    //dept_Name ...... Department Name
         new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
         new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
         new Product { ID = 3, ProductName = "Product C", Price = 200.00m },

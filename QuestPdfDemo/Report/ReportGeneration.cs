@@ -83,7 +83,7 @@ namespace QuestPdfDemo.Report
                 {
                     foreach (var header in headers)
                     {
-                        columns.RelativeColumn(header.Width == 0 ? 2 : header.Width);
+                        columns.RelativeColumn(header.Width);
                     }
                 });
 
@@ -98,6 +98,7 @@ namespace QuestPdfDemo.Report
                 {
                     foreach (var header in headers)
                     {
+                        //trim()
                         var property = typeof(T).GetProperty(header.Name.Replace(" ", ""));
                        
                         var value = property != null ? property.GetValue(row)?.ToString() : string.Empty;
