@@ -3,22 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace QuestPdfDemo.models
 {
-    public class ReportOptions
+    public class ReportOptions<T>
     {
         public string Orientation { get; set; } // "Portrait" or "Landscape"
         public string Language { get; set; } // "AR" or "EN"
         public PageHeaderViewModel PageHeader { get; set; } = new PageHeaderViewModel();
-        public List<header> TableHeaders { get; set; }
-        public List<List<DataViewModel>> TableData { get; set; } // Rows of data
+        public List<Header> TableHeaders { get; set; } 
+        public List<T> TableData { get; set; } 
+
+        public ReportOptions(string orientation , string language,
+            PageHeaderViewModel pageHeader,
+            List<Header> headers, List<T> data)
+        {
+            Orientation = orientation;
+            Language = language;
+            PageHeader = pageHeader;
+            TableHeaders = headers;
+            TableData = data;
+        } // Rows of data
     }
-    public class header()
+    public class Header
     {
-        public string name { get; set; }
-        public float? width { get; set; }
-    } 
+        public string Name { get; set; } // Header name
+        public float Width { get; set; } // Column width
+
+        public Header(string name, float width)
+        {
+            Name = name;
+            Width = width;
+        }
+    }
     public class DataViewModel()
     {
         public string name { get; set; }

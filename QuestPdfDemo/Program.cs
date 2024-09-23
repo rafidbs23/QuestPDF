@@ -2,56 +2,112 @@
 using QuestPdfDemo.Report;
 using System.ComponentModel.DataAnnotations;
 
-var options = new ReportOptions
-{
-    Orientation = "Portrait", // or "Landscape"
-    Language = "EN", // or "AR" 
-    PageHeader = {ministryName ="Al Rayan Ministry",ReportTitle = "Dynamic Report Title" 
-                    ,ReportSubTitle="bla bla bla ", ministryImg ="favicon.ico",EmployeeName="Ahmed Saad Helmy"} ,
-    TableHeaders = headers(),
-    TableData = Data()
-};
-static List<header> headers()
-{
-
-    var listOf = new List<header>() {
-    new header { name="Product Name" ,width=3},
-    new header { name="Price"  ,width=1},
-    new header { name = "Quantity", width = 2},
-    new header { name="Value"  ,width=1},
-    new header { name = "test" },
-};
-return listOf;
-}
-static List<List<DataViewModel>> Data()
-{
-    var listOf = new List<List<DataViewModel>>()
+var Orientation = "Portrait"; // or "Landscape"
+var Language = "EN"; // or "AR" 
+PageHeaderViewModel PageHeader =new PageHeaderViewModel()
+            {ministryName = "Al Rayan Ministry",ReportTitle = "Dynamic Report Title"
+                    ,ReportSubTitle = "bla bla bla ", ministryImg = "favicon.ico",EmployeeName = "Ahmed Saad Helmy"};
+var headers = new List<Header>
     {
-        new List<DataViewModel>
-        {
-            new DataViewModel { name = "Product Name", value = "hhhhheee" },
-            new DataViewModel { name = "Price", value = "20" },
-            new DataViewModel { name = "Quantity", value = "30" },
-            new DataViewModel { name = "Value", value = "100" },
-            new DataViewModel { name = "test", value = "ddddf" }
-        }
+        new Header("ID", 1),
+        new Header("Product Name", 3),
+        new Header("Price", 2),
     };
-
-    return listOf;
+var products = new List<Product>
+    {
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Productفففففففففففففففففففففففففففففففففففففففففففففففففففففففففففففف A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Producبببt B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m },
+        new Product { ID = 1, ProductName = "Product A", Price = 99.99m },
+        new Product { ID = 2, ProductName = "Product B", Price = 149.50m },
+        new Product { ID = 3, ProductName = "Product C", Price = 200.00m }
+    };
+var reportOptions = new ReportOptions<Product>(Orientation,Language,PageHeader,headers, products);
+ReportGeneration report = new ReportGeneration();
+report.GeneratePdf(reportOptions);
+public class Product
+{
+    public int ID { get; set; }
+    public string ProductName { get; set; }
+    public decimal Price { get; set; }
 }
-
-
-var report = new ReportGeneration(options);
-report.GeneratePdf();
-//static List<List<string>> Data()
-//{
-
-//    var listOf = new List<List<string>>
-//    {
-//        new List<string> { "dddddddddssssdddddddddddddddddddddddddddddddddddddddddddddddddddd" +
-//        "dddddddddddddddsssssssssssssdd", "10" ,"15511512 $","50","testtststststs"},
-//        new List<string> { "Item 2", "20" ,"15511512 $","22552222","testtststststs"},
-//        new List<string> { "Item 3", "30" ,"15511512 $","22552222","testtststststs"},
-//    };
-//return listOf;
-//}

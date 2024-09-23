@@ -14,14 +14,9 @@ namespace QuestPdfDemo.Report
 {
     public class ReportGeneration
     {
-        private readonly ReportOptions _options;
 
-        public ReportGeneration(ReportOptions options)
-        {
-            _options = options;
-        }
 
-        public void GeneratePdf()
+        public void GeneratePdf<T> (ReportOptions<T> _options)
         {
             Document.Create(container =>
             {
@@ -30,7 +25,8 @@ namespace QuestPdfDemo.Report
                     {
                         // Set orientation
                         page.Size(_options.Orientation == "Landscape" ? PageSizes.A4.Landscape() : PageSizes.A4.Portrait());
-                        if(_options.Language =="AR") page.ContentFromRightToLeft();
+                        if (_options.Language == "AR")
+                            page.ContentFromRightToLeft();
                         page.Margin(50);
 
                         page.Header()
@@ -38,15 +34,16 @@ namespace QuestPdfDemo.Report
 
                         page.Content()
                             .Element(c => ComposeBody(c, _options.TableHeaders, _options.TableData));
+                        ;
 
                         page.Footer()
                             .Element(ComposeFooter);
                     });
             }).ShowInPreviewer();
-            
+
         }
 
-        private void ComposeHeader(IContainer container, PageHeaderViewModel header)
+        private void ComposeHeader (IContainer container, PageHeaderViewModel header)
         {
             container.Row(row =>
             {
@@ -61,13 +58,13 @@ namespace QuestPdfDemo.Report
 
                 {
                     column.Item().Text(header.ReportSubTitle).Style(Typography.Title).AlignCenter();
-                    
+
                     column.Item().Text(header.EmployeeName).AlignCenter();
                 });
                 row.RelativeItem().Height(80).Column(column =>
                 {
 
-                    column.Item().AlignCenter().Height(40).Width(40).Image(header.ministryImg?? "favicon.ico");
+                    column.Item().AlignCenter().Height(40).Width(40).Image(header.ministryImg ?? "favicon.ico");
                     column.Item().AlignCenter().Text(header.ministryName)
                      .FontColor(Colors.Orange.Accent4).SemiBold();
                     column.Item().AlignCenter().Text(Placeholders.Label());
@@ -77,69 +74,60 @@ namespace QuestPdfDemo.Report
             });
         }
 
-        private void ComposeBody(IContainer container, List<header> headers, List<List<DataViewModel>> data)
+        private void ComposeBody<T> (IContainer container, List<Header> headers, List<T> data)
         {
             container.PaddingBottom(1).Extend().Table(table =>
             {
-                // Define columns based on headers
+
                 table.ColumnsDefinition(columns =>
-                        {
-                            
-                                foreach (var header in headers)
-                                {
-                                    columns.RelativeColumn(header.width ?? 2); // If width is null, use 2 as default
-                                }
-                            
-                        });
+                {
+                    foreach (var header in headers)
+                    {
+                        columns.RelativeColumn(header.Width == 0 ? 2 : header.Width);
+                    }
+                });
 
-                        // Header row
-                        table.Header(headerRow =>
-                        {
-                            foreach (var header in headers)
-                            {
-                                headerRow.Cell().Element(headerBlock).Text(header.name);
-                            }
-                        });
-
-                        // Data rows
-                        foreach (var row in data)
-                        {
-                            foreach (var cell in row)
-                            {
-                                table.Cell().Element(Block).Text(cell.value);
-                            }
-                        }
-                    });
-          
+                table.Header(headerRow =>
+                {
+                    foreach (var header in headers)
+                    {
+                        headerRow.Cell().Element(headerBlock).Text(header.Name);
+                    }
+                });
+                foreach (var row in data)
+                {
+                    foreach (var header in headers)
+                    {
+                        var property = typeof(T).GetProperty(header.Name.Replace(" ", ""));
+                       
+                        var value = property != null ? property.GetValue(row)?.ToString() : string.Empty;
+                        table.Cell().Element(Block).Text(value);
+                    }
+                }
+            });
         }
-         IContainer Block(IContainer container)
+        IContainer Block (IContainer container)
         {
             return container
                 .Border(1)
                 .Background(Colors.Grey.Lighten3)
                 .PaddingVertical(5)
                 .ShowEntire()
-
                 .AlignCenter()
                 .AlignMiddle()
-
-                .AlignCenter()
-                 ;
+                .AlignCenter();
         }
-         IContainer headerBlock(IContainer container)
+        IContainer headerBlock (IContainer container)
         {
             return container
                 .Border(1)
                 .Background(Colors.Grey.Lighten3)
                 .PaddingBottom(1)
-
                 .ShowOnce()
-
-
                 .AlignCenter()
                 .AlignMiddle();
         }
-        private void ComposeFooter(IContainer container)
+        private void ComposeFooter (IContainer container)
         {
             container.AlignCenter().Text(text =>
             {
@@ -149,5 +137,6 @@ namespace QuestPdfDemo.Report
                 text.Span(" of ").FontColor(Colors.Orange.Accent4).Underline();
                 text.TotalPages();
             });
-        } }
+        }
     }
+}
